@@ -71,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isComplete()) {
 
-                                newUserRef = MainActivity.mRootRef.child("student").child(email.getText().toString().replace("@", "").replace(".", ""));
+                                newUserRef = LoginActivity.mRootRef.child("student").child(email.getText().toString().replace("@", "").replace(".", ""));
 
                                 newUserRef.child("email").setValue(email.getText().toString());
                                 newUserRef.child("name").setValue(name.getText().toString());

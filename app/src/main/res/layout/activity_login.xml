@@ -74,7 +74,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:text="Create a new account?"
-        android:onClick="onClick"
+        android:onClick="onClickSignUp"
         android:textSize="25dp" />
 
     <Button
