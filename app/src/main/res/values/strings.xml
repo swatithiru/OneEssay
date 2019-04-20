@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">OneEssay</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string-array name="topics_array">
+        <item>Evolution of mobile phones</item>
+        <item>Internet of Things</item>
+        <item>Scope of Artificial Intelligence</item>
+
+    </string-array>
+    <string-array name="Professor">
+        <item>Dr Elizabeth Diaz</item>
+        <item>Dr Rob Williams</item>
+        <item>Dr John Rob</item>
+        <item>Dr George Lyles</item>
+        <item>Dr Austin Rose</item>
+    </string-array>
+</resources>
