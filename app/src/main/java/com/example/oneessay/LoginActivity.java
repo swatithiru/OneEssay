@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean validateEmptyFields(String user, String password) {
         Boolean res = false;
-         if(!(User.getText().toString().isEmpty() || Password.getText().toString().isEmpty()))
+         if(!(user.isEmpty() || password.isEmpty()))
         {
             //Toast.makeText(this,"The User Name and Password Fields cannot be empty",Toast.LENGTH_LONG).show();
             res = true;

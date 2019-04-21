@@ -49,63 +49,71 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
     public void onClickRegister(View view) {
 
-        name= (EditText)findViewById(R.id.Name);
-        email= (EditText)findViewById(R.id.Email);
-        password= (EditText)findViewById(R.id.Password);
-        confirmpassword= (EditText)findViewById(R.id.ConfirmPassword);
-        studentid= (EditText)findViewById(R.id.StudentID);
-
-        if(true /*name.getText().toString().isEmpty() || email.getText().toString().equals("")
+        name = (EditText) findViewById(R.id.Name);
+        String uName = name.getText().toString();
+        email = (EditText) findViewById(R.id.Email);
+        String emailid = email.getText().toString();
+        password = (EditText) findViewById(R.id.Password);
+        String pass = password.getText().toString();
+        confirmpassword = (EditText) findViewById(R.id.ConfirmPassword);
+        String confirmPass = confirmpassword.getText().toString();
+        studentid = (EditText) findViewById(R.id.StudentID);
+        String stuID = studentid.getText().toString();
+        Boolean result = validateEmptyFields(uName, emailid, pass, confirmPass);
+        if (result) {
+            if (true /*name.getText().toString().isEmpty() || email.getText().toString().equals("")
                     || password.getText().toString().equals("") || studentid.getText().toString().equals("")
                     || confirmpassword.getText().toString().equals("")*/) {
 
-            if (true/*password.getText().toString().length() < 6*/) {
+                if (true/*password.getText().toString().length() < 6*/) {
 
-                if (password.getText().toString().equals(confirmpassword.getText().toString())) {
+                    if (password.getText().toString().equals(confirmpassword.getText().toString())) {
 
-                    progressDialog.setMessage("You are Registering .....");
-                    progressDialog.show();
+                        progressDialog.setMessage("You are Registering .....");
+                        progressDialog.show();
 
-                    firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isComplete()) {
+                        firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isComplete()) {
 
-                                newUserRef = LoginActivity.mRootRef.child("student").child(email.getText().toString().replace("@", "").replace(".", ""));
+                                    newUserRef = LoginActivity.mRootRef.child("student").child(email.getText().toString().replace("@", "").replace(".", ""));
 
-                                newUserRef.child("email").setValue(email.getText().toString());
-                                newUserRef.child("name").setValue(name.getText().toString());
-                                newUserRef.child("professor").setValue(professor.getSelectedItem().toString());
-                                newUserRef.child("studentid").setValue(studentid.getText().toString());
+                                    newUserRef.child("email").setValue(email.getText().toString());
+                                    newUserRef.child("name").setValue(name.getText().toString());
+                                    newUserRef.child("professor").setValue(professor.getSelectedItem().toString());
+                                    newUserRef.child("studentid").setValue(studentid.getText().toString());
 
-                                Toast.makeText(getApplicationContext(), "Registered Succesfully " + email.getText().toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Registered Succesfully " + email.getText().toString(), Toast.LENGTH_SHORT).show();
 
-                                progressDialog.dismiss();
+                                    progressDialog.dismiss();
 
-                                Intent in = new Intent(SignUpActivity.this, LoginActivity.class);
-                                startActivity(in);
+                                    Intent in = new Intent(SignUpActivity.this, LoginActivity.class);
+                                    startActivity(in);
 
-                            } else {
-                                Toast.makeText(SignUpActivity.this, "Could not Register Succesfully", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, "Could not Register Succesfully", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
 
 
-                    });
+                        });
 
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Passwords do not match !!", Toast.LENGTH_LONG).show();
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Passwords do not match !!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Passwords should be atleast 6 characters !!", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Passwords should be atleast 6 characters !!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No field should be empty !!", Toast.LENGTH_LONG).show();
             }
-        }
 
+        }
         else
         {
-            Toast.makeText(getApplicationContext(), "No field should be empty !!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"The Fields cannot be empty",Toast.LENGTH_LONG).show();
         }
-
     }
 
 
@@ -117,5 +125,16 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+    private boolean validateEmptyFields(String uName, String emailid, String user, String password) {
+        Boolean res = false;
+        if(!(uName.isEmpty() || emailid.isEmpty() || user.isEmpty() || password.isEmpty()))
+        {
+            //Toast.makeText(this,"The User Name and Password Fields cannot be empty",Toast.LENGTH_LONG).show();
+            res = true;
+
+        }
+
+        return res;
     }
 }
