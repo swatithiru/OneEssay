@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     LinearLayout container;
 
-    TextView essaytopic, essaycontent, currentstudent, nextstudent, time, noactiveessay;
+    TextView essaytopic, essaycontent, currentstudent, nextstudent, nextinline, time, noactiveessay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         essaycontent = (TextView) findViewById(R.id.essaycontentText);
         currentstudent = (TextView) findViewById(R.id.currentstudent);
         nextstudent = (TextView) findViewById(R.id.nextStudent);
+        nextinline = (TextView) findViewById(R.id.nextInLine);
         time = (TextView) findViewById(R.id.time);
 
         noactiveessay = (TextView) findViewById(R.id.noactiveessay);
@@ -79,7 +80,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     essaycontent.setText(activity.getEssaycontent());
                     currentstudent.setText(activity.getCurrentstudent());
                     time.setText(activity.getTime());
-                    nextstudent.setText(activity.getNextstudents().get(0));
+                    //nextstudent.setText(activity.getNextstudents().get(0));
+                    nextinline.setText("Next in Line: " + activity.getNextstudents().get(0));
 
                     noactiveessay.setVisibility(View.GONE);
                     container.setVisibility(View.VISIBLE);
