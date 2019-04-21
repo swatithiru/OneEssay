@@ -16,6 +16,7 @@ public class Student implements Serializable {
         this.password = password;
         this.studentid = studentid;
         this.professor = professor;
+
     }
 
     public String getName() {

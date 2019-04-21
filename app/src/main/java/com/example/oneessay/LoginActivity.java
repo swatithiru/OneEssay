@@ -53,37 +53,67 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClickLogin(View view) {
 
-        login=(Button)findViewById(R.id.button);
+        login = (Button) findViewById(R.id.button);
         User = (EditText) findViewById(R.id.editText);
+        String user = User.getText().toString();
         Password = (EditText) findViewById(R.id.editText2);
+        String password = Password.getText().toString();
+        Boolean result = validateEmptyFields(user, password);
 
-        progressDialog.setMessage("Logging in");
-        progressDialog.show();
+        /*if(User.getText().toString().isEmpty() || Password.getText().toString().isEmpty())
+        {
+            Toast.makeText(this,"The User Name and Password Fields cannot be empty",Toast.LENGTH_LONG).show();
+            return;
+        }*/
+        if (result) {
+            progressDialog.setMessage("Logging in");
+            progressDialog.show();
 
-        firebaseAuth.signInWithEmailAndPassword(User.getText().toString(), Password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
+            firebaseAuth.signInWithEmailAndPassword(User.getText().toString(), Password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
 
-                    progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        LoginActivity.currentUser = user;
+//                    if(user.getEmail().equalsIgnoreCase("") && Password.getText().toString().equalsIgnoreCase("") )
+//                    {
+//                        Toast.makeText(LoginActivity.this,"The User and Password fields cannot be empty",Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
 
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    LoginActivity.currentUser = user;
+                        if (user.getEmail().equals("p@gmail.com"))
+                            startActivity(new Intent(LoginActivity.this, ProfessorHomePageActivity.class));
 
-                    if(user.getEmail().equals("p@gmail.com"))
-                        startActivity(new Intent(LoginActivity.this, ProfessorHomePageActivity.class));
+                        else
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
-                    else
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "Could not Login Succesfully", Toast.LENGTH_SHORT).show();
+                    }
 
-                } else {
-                    progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "Could not Login Succesfully", Toast.LENGTH_SHORT).show();
                 }
+            });
 
-            }
-        });
+        }
+        else
+        {
+            Toast.makeText(this,"The User Name and Password Fields cannot be empty",Toast.LENGTH_LONG).show();
+        }
+    }
 
+    private boolean validateEmptyFields(String user, String password) {
+        Boolean res = false;
+         if(!(User.getText().toString().isEmpty() || Password.getText().toString().isEmpty()))
+        {
+            //Toast.makeText(this,"The User Name and Password Fields cannot be empty",Toast.LENGTH_LONG).show();
+            res = true;
+
+        }
+
+        return res;
     }
 }
