@@ -104,13 +104,16 @@ public class DisplayTopicActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+
                 essayList.clear();
+
                 while(iterator.hasNext()){
                     DataSnapshot s = iterator.next();
                     essay = s.getValue(Essay.class);
                     essayList.add(essay.getTopic());
                 }
                 count = essayList.size() + 100;
+
                 essayAdapter = new EssayTopicsAdapter(DisplayTopicActivity.this, essayList.toArray(new String[0]));
                 essayListView.setAdapter(essayAdapter);
 
@@ -120,8 +123,6 @@ public class DisplayTopicActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     @Override
