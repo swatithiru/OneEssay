@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,41 +30,25 @@ public class DisplayTopicActivity extends AppCompatActivity {
     DatabaseReference essayTopicsRef;
 
     EditText essaytopic;
+    ListView essayListView;
 
     int count = 100;
 
     Essay essay;
 
-    List<Essay> essayList;
+    List<String> essayList;
+    EssayTopicsAdapter essayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_topic);
 
+        essayListView = (ListView) findViewById(R.id.essaytopicsListView);
 
-        essayList = new ArrayList<Essay>();
+        essayList = new ArrayList<String>();
 
-        LoginActivity.mRootRef.child("essay").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-
-                while(iterator.hasNext()){
-                    DataSnapshot s = iterator.next();
-                    essay = s.getValue(Essay.class);
-                    essayList.add(essay);
-                }
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        count = essayList.size() + 100;
+        updateList();
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -102,11 +88,40 @@ public class DisplayTopicActivity extends AppCompatActivity {
                 essayTopicsRef.child("topic").setValue(essaytopic.getText().toString());
                 essayTopicsRef.child("id").setValue(""+(count++));
 
-                Toast.makeText(DisplayTopicActivity.this, "Ok has been clicked", Toast.LENGTH_SHORT).show();
+                updateList();
+
+                Toast.makeText(DisplayTopicActivity.this, "New Topic has been added", Toast.LENGTH_SHORT).show();
             }
         });
 
         builder.show();
+    }
+
+    private void updateList()
+    {
+        LoginActivity.mRootRef.child("essay").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+
+                while(iterator.hasNext()){
+                    DataSnapshot s = iterator.next();
+                    essay = s.getValue(Essay.class);
+                    essayList.add(essay.getTopic());
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        count = essayList.size() + 100;
+
+        essayAdapter = new EssayTopicsAdapter(this, essayList.toArray(new String[0]));
+        essayListView.setAdapter(essayAdapter);
     }
 
     public void onClickEssay(View view) {

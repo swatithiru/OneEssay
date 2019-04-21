@@ -51,21 +51,24 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
         name = (EditText) findViewById(R.id.Name);
         String uName = name.getText().toString();
+
         email = (EditText) findViewById(R.id.Email);
         String emailid = email.getText().toString();
+
         password = (EditText) findViewById(R.id.Password);
         String pass = password.getText().toString();
+
         confirmpassword = (EditText) findViewById(R.id.ConfirmPassword);
         String confirmPass = confirmpassword.getText().toString();
+
         studentid = (EditText) findViewById(R.id.StudentID);
         String stuID = studentid.getText().toString();
-        Boolean result = validateEmptyFields(uName, emailid, pass, confirmPass);
-        if (result) {
-            if (true /*name.getText().toString().isEmpty() || email.getText().toString().equals("")
-                    || password.getText().toString().equals("") || studentid.getText().toString().equals("")
-                    || confirmpassword.getText().toString().equals("")*/) {
 
-                if (true/*password.getText().toString().length() < 6*/) {
+        Boolean result = validateEmptyFields(uName, emailid, pass, confirmPass, stuID);
+
+        if (result) {
+
+                if (pass.length() < 6) {
 
                     if (password.getText().toString().equals(confirmpassword.getText().toString())) {
 
@@ -105,9 +108,6 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                 } else {
                     Toast.makeText(getApplicationContext(), "Passwords should be atleast 6 characters !!", Toast.LENGTH_LONG).show();
                 }
-            } else {
-                Toast.makeText(getApplicationContext(), "No field should be empty !!", Toast.LENGTH_LONG).show();
-            }
 
         }
         else
@@ -126,9 +126,9 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-    private boolean validateEmptyFields(String uName, String emailid, String user, String password) {
+    private boolean validateEmptyFields(String uName, String emailid, String user, String password, String sid) {
         Boolean res = false;
-        if(!(uName.isEmpty() || emailid.isEmpty() || user.isEmpty() || password.isEmpty()))
+        if(!(uName.isEmpty() || emailid.isEmpty() || user.isEmpty() || password.isEmpty() || sid.isEmpty()))
         {
             //Toast.makeText(this,"The User Name and Password Fields cannot be empty",Toast.LENGTH_LONG).show();
             res = true;
