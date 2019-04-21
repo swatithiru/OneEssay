@@ -1,14 +1,19 @@
 package com.example.oneessay;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,7 +35,7 @@ import java.util.List;
 public class DisplayTopicActivity extends AppCompatActivity {
 
     DatabaseReference essayTopicsRef;
-
+    private Menu menu;
     EditText essaytopic;
     ListView essayListView;
 
@@ -210,4 +215,75 @@ public class DisplayTopicActivity extends AppCompatActivity {
         else
             Toast.makeText(DisplayTopicActivity.this, "Please select a topic", Toast.LENGTH_LONG).show();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+            // Only show items in the action bar relevant to this screen
+            // if the drawer is not showing. Otherwise, let the drawer
+            // decide what to show in the action bar.
+            getMenuInflater().inflate(R.menu.main, menu);
+
+           /* SharedPreferences sharedPref = getSharedPreferences("Billing", Context.MODE_PRIVATE);
+            /*if (sharedPref.getBoolean(getString(R.string.noads_purchased), false)) {
+                item = menu.findItem(R.id.buy_noads);
+                item.setVisible(false);
+            }
+            if (sharedPref.getBoolean(getString(R.string.bilingual_purchased), false)) {
+                item = menu.findItem(R.id.buy_bilingual);
+                item.setVisible(false);
+                item = menu.findItem(R.id.action_purchase);
+                item.setVisible(false);
+            }*/
+            this.menu = menu;
+            restoreActionBar();
+            return true;
+
+        //return super.onCreateOptionsMenu(menu);
+    }
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle("One Essay");
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.logout) {
+
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(DisplayTopicActivity.this);
+
+            builder.setTitle("ONE ESSAY");
+            builder.setMessage("Are you sure you want to log out?");
+
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+
+                    Intent intent = new Intent(DisplayTopicActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                    dialog.dismiss();
+                }
+
+            });
+
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing
+                    dialog.dismiss();
+                }
+            });
+
+            android.app.AlertDialog alert = builder.create();
+            alert.show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
