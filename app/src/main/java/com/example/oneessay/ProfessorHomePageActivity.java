@@ -19,11 +19,15 @@ import java.util.List;
 public class ProfessorHomePageActivity extends AppCompatActivity {
 
     ListView studentListView;
+    ListView activityListView;
 
     DatabaseReference studentsRef;
 
     Student student;
     List<String> studentList;
+
+    EssayActivity activity;
+    List<String> activityList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,38 @@ public class ProfessorHomePageActivity extends AppCompatActivity {
 
             }
         });
+
+        activityListView = (ListView) findViewById(R.id.activitylist);
+
+        activityList = new ArrayList<String>();
+
+
+        LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+
+                activityList.clear();
+
+                while(iterator.hasNext()){
+                    DataSnapshot s = iterator.next();
+                    activity = s.getValue(EssayActivity.class);
+                    if(activity.getStatus())
+                        activityList.add(activity.getEssaytopic());
+                }
+
+                ArrayAdapter adapter = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_list_item_1,activityList);
+
+                activityListView.setAdapter(adapter);
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
     public void studAdd(View v){

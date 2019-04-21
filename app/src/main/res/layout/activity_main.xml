@@ -7,12 +7,21 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No activity started"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/noactiveessay"/>
+
     <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
     <LinearLayout
         android:id="@+id/content_frame"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:visibility="visible">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -35,6 +44,7 @@
         android:textSize="25dp"
         android:text="Mobile Apps"
         android:layout_marginRight="5dp"
+        android:id="@+id/essaytopic"
         />
 
     <TextView
@@ -46,7 +56,8 @@
         android:text="5:00"
         android:textColor="@color/colorAccent"
         android:textSize="25dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:id="@+id/time"/>
 
 
 </LinearLayout>
@@ -71,6 +82,7 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="25dp"
                 android:text="John"
+                android:id="@+id/currentstudent"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -79,7 +91,7 @@
                 android:textStyle="bold"
                 android:layout_marginLeft="10dp"
                 android:textSize="25dp"
-                android:text="Position: "
+                android:text="Next: "
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -89,6 +101,7 @@
                 android:layout_marginLeft="10dp"
                 android:textSize="25dp"
                 android:text="1"
+                android:id="@+id/nextStudent"
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 />
@@ -104,7 +117,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center">
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/essaycontentText"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"

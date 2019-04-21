@@ -39,6 +39,13 @@ public class DisplayTopicActivity extends AppCompatActivity {
     List<String> essayList;
     EssayTopicsAdapter essayAdapter;
 
+
+    ArrayList<String> studentList;
+    Student student;
+
+    String currentStudent;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,17 +130,54 @@ public class DisplayTopicActivity extends AppCompatActivity {
 
             }
         });
+
+        LoginActivity.mRootRef.child("student").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                studentList = new ArrayList<String>();
+
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+
+                while(iterator.hasNext()){
+                    DataSnapshot s = iterator.next();
+                    student = s.getValue(Student.class);
+                    studentList.add(student.getName());
+                }
+
+                Collections.shuffle(studentList);
+                currentStudent = studentList.get(0);
+
+                studentList.remove(0);
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
-    @Override
-    protected void onResume() {
-        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
-        essayList.clear();
-        super.onResume();
-    }
 
     public void onClickEssay(View view) {
+
+        Essay ess = new Essay("3001","Fall of Fountain Mountain");
+
+        essayTopicsRef = LoginActivity.mRootRef.child("activity").child("3001");
+
+        essayTopicsRef.child("essaytopic").setValue(ess.getTopic());
+        essayTopicsRef.child("id").setValue("3001");
+        essayTopicsRef.child("essaycontent").setValue("");
+        essayTopicsRef.child("status").setValue(Boolean.TRUE);
+        essayTopicsRef.child("currentstudent").setValue(currentStudent);
+        essayTopicsRef.child("nextstudents").setValue(studentList);
+        essayTopicsRef.child("time").setValue("30:00");
+
         Intent intent=new Intent(DisplayTopicActivity.this,MainActivity.class);
+
+        intent.putExtra("essayselected",ess);
+
         startActivity(intent);
     }
 }
