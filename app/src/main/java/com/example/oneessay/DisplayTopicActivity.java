@@ -2,6 +2,7 @@ package com.example.oneessay;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -104,6 +106,9 @@ public class DisplayTopicActivity extends AppCompatActivity {
         builder.show();
     }
 
+    int activityCount = 1000;
+    EssayActivity activity;
+
     private void updateList()
     {
         LoginActivity.mRootRef.child("essay").addValueEventListener(new ValueEventListener() {
@@ -119,6 +124,7 @@ public class DisplayTopicActivity extends AppCompatActivity {
                     essay = s.getValue(Essay.class);
                     essayList.add(essay.getTopic());
                 }
+
                 count = essayList.size() + 100;
 
                 essayAdapter = new EssayTopicsAdapter(DisplayTopicActivity.this, essayList.toArray(new String[0]));
@@ -157,27 +163,51 @@ public class DisplayTopicActivity extends AppCompatActivity {
             }
         });
 
-    }
+        LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                int i = 0;
+                while(iterator.hasNext()){
+                    DataSnapshot s = iterator.next();
+                    activity = s.getValue(EssayActivity.class);
+                    i++;
+                }
+                activityCount = i+1000;
+
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     public void onClickEssay(View view) {
 
         Essay ess = new Essay("3001","Fall of Fountain Mountain");
 
-        essayTopicsRef = LoginActivity.mRootRef.child("activity").child("3001");
+        if(!EssayTopicsAdapter.selectedTopic.equals("None")) {
 
-        essayTopicsRef.child("essaytopic").setValue(ess.getTopic());
-        essayTopicsRef.child("id").setValue("3001");
-        essayTopicsRef.child("essaycontent").setValue("");
-        essayTopicsRef.child("status").setValue(Boolean.TRUE);
-        essayTopicsRef.child("currentstudent").setValue(currentStudent);
-        essayTopicsRef.child("nextstudents").setValue(studentList);
-        essayTopicsRef.child("time").setValue("30:00");
+            essayTopicsRef = LoginActivity.mRootRef.child("activity").child(""+activityCount);
 
-        Intent intent=new Intent(DisplayTopicActivity.this,MainActivity.class);
+            essayTopicsRef.child("essaytopic").setValue(EssayTopicsAdapter.selectedTopic);
+            essayTopicsRef.child("id").setValue(""+activityCount);
+            essayTopicsRef.child("essaycontent").setValue("");
+            essayTopicsRef.child("status").setValue(Boolean.TRUE);
+            essayTopicsRef.child("currentstudent").setValue(currentStudent);
+            essayTopicsRef.child("nextstudents").setValue(studentList);
+            essayTopicsRef.child("time").setValue("30:00");
 
-        intent.putExtra("essayselected",ess);
+            Intent intent = new Intent(DisplayTopicActivity.this, MainActivity.class);
 
-        startActivity(intent);
+            intent.putExtra("essayselected", ess);
+
+            startActivity(intent);
+        }
+        else
+            Toast.makeText(DisplayTopicActivity.this, "Please select a topic", Toast.LENGTH_LONG).show();
     }
 }
