@@ -10,6 +10,17 @@ public class Student implements Serializable {
     private  String studentid;
     private  String professor;
 
+    public Student()
+    {
+        name = "";
+        email = "";
+        password = "";
+        studentid = "";
+        professor = "";
+
+
+    }
+
     public Student(String name, String email, String password, String studentid, String professor) {
         this.name = name;
         this.email = email;

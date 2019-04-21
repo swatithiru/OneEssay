@@ -21,15 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button login;
-    private TextView signUp;
     private EditText User;
     private EditText Password;
 
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
-
-    Student loginstudent;
 
     public static DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     public static FirebaseUser currentUser;
@@ -53,18 +49,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClickLogin(View view) {
 
-        login = (Button) findViewById(R.id.button);
         User = (EditText) findViewById(R.id.editText);
         String user = User.getText().toString();
         Password = (EditText) findViewById(R.id.editText2);
         String password = Password.getText().toString();
         Boolean result = validateEmptyFields(user, password);
 
-        /*if(User.getText().toString().isEmpty() || Password.getText().toString().isEmpty())
-        {
-            Toast.makeText(this,"The User Name and Password Fields cannot be empty",Toast.LENGTH_LONG).show();
-            return;
-        }*/
         if (result) {
             progressDialog.setMessage("Logging in");
             progressDialog.show();
@@ -78,11 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         LoginActivity.currentUser = user;
-//                    if(user.getEmail().equalsIgnoreCase("") && Password.getText().toString().equalsIgnoreCase("") )
-//                    {
-//                        Toast.makeText(LoginActivity.this,"The User and Password fields cannot be empty",Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
 
                         if (user.getEmail().equals("p@gmail.com"))
                             startActivity(new Intent(LoginActivity.this, ProfessorHomePageActivity.class));
@@ -109,9 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         Boolean res = false;
          if(!(user.isEmpty() || password.isEmpty()))
         {
-            //Toast.makeText(this,"The User Name and Password Fields cannot be empty",Toast.LENGTH_LONG).show();
             res = true;
-
         }
 
         return res;
