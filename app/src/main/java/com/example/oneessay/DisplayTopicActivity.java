@@ -41,6 +41,13 @@ public class DisplayTopicActivity extends AppCompatActivity {
     List<String> essayList;
     EssayTopicsAdapter essayAdapter;
 
+
+    ArrayList<String> studentList;
+    Student student;
+
+    String currentStudent;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,10 +92,10 @@ public class DisplayTopicActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                essayTopicsRef = LoginActivity.mRootRef.child("essay").child("" + count);
+                essayTopicsRef = LoginActivity.mRootRef.child("essay").child(""+count);
 
                 essayTopicsRef.child("topic").setValue(essaytopic.getText().toString());
-                essayTopicsRef.child("id").setValue("" + (count++));
+                essayTopicsRef.child("id").setValue(""+(count++));
 
                 updateList();
 
@@ -99,7 +106,11 @@ public class DisplayTopicActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void updateList() {
+    int activityCount = 1000;
+    EssayActivity activity;
+
+    private void updateList()
+    {
         LoginActivity.mRootRef.child("essay").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -108,25 +119,65 @@ public class DisplayTopicActivity extends AppCompatActivity {
 
                 essayList.clear();
 
-                while (iterator.hasNext()) {
+                while(iterator.hasNext()){
                     DataSnapshot s = iterator.next();
                     essay = s.getValue(Essay.class);
                     essayList.add(essay.getTopic());
                 }
+
                 count = essayList.size() + 100;
 
                 essayAdapter = new EssayTopicsAdapter(DisplayTopicActivity.this, essayList.toArray(new String[0]));
                 essayListView.setAdapter(essayAdapter);
-                essayListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        view.setSelected(true);
-                        view.setBackgroundResource(R.color.colorAccent);
-                    }
-                });
 
             }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        LoginActivity.mRootRef.child("student").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                studentList = new ArrayList<String>();
+
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+
+                while(iterator.hasNext()){
+                    DataSnapshot s = iterator.next();
+                    student = s.getValue(Student.class);
+                    studentList.add(student.getName());
+                }
+
+                Collections.shuffle(studentList);
+                currentStudent = studentList.get(0);
+
+                studentList.remove(0);
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                int i = 0;
+                while(iterator.hasNext()){
+                    DataSnapshot s = iterator.next();
+                    activity = s.getValue(EssayActivity.class);
+                    i++;
+                }
+                activityCount = i+1000;
+
+
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -134,35 +185,29 @@ public class DisplayTopicActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        essayListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setSelected(true);
-                view.setBackgroundResource(R.color.colorAccent);
-            }
-        });
-//            Toast.makeText(this,"clciked",Toast.LENGTH_LONG).show();
-//            final ListView listView = (ListView) findViewById(R.id.essaytopicsListView);
-//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//
-//                        Toast.makeText(DisplayTopicActivity.this,listView.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
-//
-//                   // view.setBackgroundColor(Color.BLUE);
-//                }
-//            });
-
-    }
-
     public void onClickEssay(View view) {
-        Intent intent = new Intent(DisplayTopicActivity.this, MainActivity.class);
-        startActivity(intent);
+
+        Essay ess = new Essay("3001","Fall of Fountain Mountain");
+
+        if(!EssayTopicsAdapter.selectedTopic.equals("None")) {
+
+            essayTopicsRef = LoginActivity.mRootRef.child("activity").child(""+activityCount);
+
+            essayTopicsRef.child("essaytopic").setValue(EssayTopicsAdapter.selectedTopic);
+            essayTopicsRef.child("id").setValue(""+activityCount);
+            essayTopicsRef.child("essaycontent").setValue("");
+            essayTopicsRef.child("status").setValue(Boolean.TRUE);
+            essayTopicsRef.child("currentstudent").setValue(currentStudent);
+            essayTopicsRef.child("nextstudents").setValue(studentList);
+            essayTopicsRef.child("time").setValue("30:00");
+
+            Intent intent = new Intent(DisplayTopicActivity.this, MainActivity.class);
+
+            intent.putExtra("essayselected", ess);
+
+            startActivity(intent);
+        }
+        else
+            Toast.makeText(DisplayTopicActivity.this, "Please select a topic", Toast.LENGTH_LONG).show();
     }
-
-
 }
