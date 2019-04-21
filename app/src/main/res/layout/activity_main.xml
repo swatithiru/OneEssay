@@ -29,16 +29,17 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginTop="10dp"
-    android:gravity="center">
+    android:gravity="start">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textStyle="bold"
-        android:text="Topic: "
+        android:text="Topic:"
+        android:layout_marginLeft="10dp"
         android:textSize="25dp"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textStyle="bold"
@@ -52,8 +53,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
         android:gravity="end"
         android:text="5:00"
         android:textColor="@color/colorAccent"
@@ -68,20 +69,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textStyle="bold"
+                android:layout_marginLeft="10dp"
                 android:text="Name:"
                 android:textSize="25dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="end"
                 android:textStyle="bold"
-                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
                 android:textSize="25dp"
                 android:text="John"
                 android:id="@+id/currentstudent"
@@ -89,11 +92,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="end"
                 android:textStyle="bold"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="30dp"
                 android:textSize="25dp"
-                android:text="Next: "
+                android:text="Position: "
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -104,8 +107,8 @@
                 android:textSize="25dp"
                 android:text="1"
                 android:id="@+id/nextStudent"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginRight="25dp"
                 />
 
         </LinearLayout>
