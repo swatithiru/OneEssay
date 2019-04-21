@@ -45,11 +45,22 @@ public class EssayTopicsAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View view) {
 
+                View parentRow = (View) view.getParent();
+                ListView lv = (ListView) parentRow.getParent();
+                View prevView = (View) lv.getChildAt(loc);
+
+                TextView prevRow = (TextView) prevView.findViewById(R.id.essayrow_topic);
+
+                prevRow.setBackgroundColor(Color.WHITE);
+                prevRow.setTextColor(Color.BLACK);
+
                 TextView temp = (TextView) view;
 
                 temp.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
                 temp.setTextColor(Color.WHITE);
                 selectedTopic = temp.getText().toString();
+
+                loc = lv.getPositionForView(parentRow);
 
             }
         });
