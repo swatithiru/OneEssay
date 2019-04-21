@@ -104,12 +104,15 @@ public class DisplayTopicActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-
+                essayList.clear();
                 while(iterator.hasNext()){
                     DataSnapshot s = iterator.next();
                     essay = s.getValue(Essay.class);
                     essayList.add(essay.getTopic());
                 }
+                count = essayList.size() + 100;
+                essayAdapter = new EssayTopicsAdapter(DisplayTopicActivity.this, essayList.toArray(new String[0]));
+                essayListView.setAdapter(essayAdapter);
 
             }
             @Override
@@ -118,10 +121,14 @@ public class DisplayTopicActivity extends AppCompatActivity {
             }
         });
 
-        count = essayList.size() + 100;
 
-        essayAdapter = new EssayTopicsAdapter(this, essayList.toArray(new String[0]));
-        essayListView.setAdapter(essayAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
+        essayList.clear();
+        super.onResume();
     }
 
     public void onClickEssay(View view) {
