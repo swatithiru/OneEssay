@@ -14,7 +14,9 @@
         android:gravity="center"
         android:visibility="gone"
         android:id="@+id/noactiveessay"/>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
     <LinearLayout
         android:id="@+id/content_frame"
@@ -107,9 +109,7 @@
                 />
 
         </LinearLayout>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,7 +132,6 @@
 
 
         </LinearLayout>
-        </ScrollView>
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -160,6 +159,8 @@
 
 </LinearLayout>
     </LinearLayout>
+    </ScrollView>
+
 
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
     <android.support.design.widget.NavigationView
