@@ -8,8 +8,8 @@ public class EssayActivity implements Serializable {
     private String id;
     private String essaytopic;
     private String essaycontent;
-    private String currentstudent;
-    private ArrayList<String> nextstudents;
+    private Student currentstudent;
+    private ArrayList<Student> nextstudents;
     private Boolean status;
     private String time;
 
@@ -18,13 +18,13 @@ public class EssayActivity implements Serializable {
         this.id = "";
         this.essaytopic = "";
         this.essaycontent = "";
-        this.currentstudent = "";
+        this.currentstudent = new Student();
         this.status = Boolean.TRUE;
-        this.nextstudents = new ArrayList<String>();
+        this.nextstudents = new ArrayList<Student>();
         this.time = "";
     }
 
-    public EssayActivity(String id, String essaytopic, String essaycontent, String currentstudent, ArrayList<String> nextstudent, Boolean status, String time) {
+    public EssayActivity(String id, String essaytopic, String essaycontent, Student currentstudent, ArrayList<Student> nextstudent, Boolean status, String time) {
         this.id = id;
         this.essaytopic = essaytopic;
         this.essaycontent = essaycontent;
@@ -58,19 +58,19 @@ public class EssayActivity implements Serializable {
         this.essaycontent = essaycontent;
     }
 
-    public String getCurrentstudent() {
+    public Student getCurrentstudent() {
         return currentstudent;
     }
 
-    public void setCurrentstudent(String currentstudent) {
+    public void setCurrentstudent(Student currentstudent) {
         this.currentstudent = currentstudent;
     }
 
-    public ArrayList<String> getNextstudents() {
+    public ArrayList<Student> getNextstudents() {
         return nextstudents;
     }
 
-    public void setNextstudents(ArrayList<String> nextstudents) {
+    public void setNextstudents(ArrayList<Student> nextstudents) {
         this.nextstudents = nextstudents;
     }
 
@@ -96,7 +96,7 @@ public class EssayActivity implements Serializable {
                 "id='" + id + '\'' +
                 ", essaytopic='" + essaytopic + '\'' +
                 ", essaycontent='" + essaycontent + '\'' +
-                ", currentstudent='" + currentstudent + '\'' +
+                ", currentstudent='" + currentstudent.toString() + '\'' +
                 ", nextstudents=" + nextstudents.toString() +
                 ", status=" + status +
                 ", time=" + time +

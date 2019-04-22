@@ -16,8 +16,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Iterator;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     public static DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     public static FirebaseUser currentUser;
 
+    public static EssayActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,29 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
+
+        activity = new EssayActivity();
+
+        LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+
+                while(iterator.hasNext()){
+                    DataSnapshot s = iterator.next();
+                    activity = s.getValue(EssayActivity.class);
+                    if(activity.getStatus())
+                        break;
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 

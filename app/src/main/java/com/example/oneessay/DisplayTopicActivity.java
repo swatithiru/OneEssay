@@ -46,11 +46,11 @@ public class DisplayTopicActivity extends AppCompatActivity {
     List<String> essayList;
     EssayTopicsAdapter essayAdapter;
 
-
+    ArrayList<Student> studentObjectList;
     ArrayList<String> studentList;
     Student student;
 
-    String currentStudent;
+    Student firstStudent;
 
 
     @Override
@@ -114,6 +114,8 @@ public class DisplayTopicActivity extends AppCompatActivity {
     int activityCount = 1000;
     EssayActivity activity;
 
+    int loopcounter = 0;
+
     private void updateList()
     {
         LoginActivity.mRootRef.child("essay").addValueEventListener(new ValueEventListener() {
@@ -148,18 +150,28 @@ public class DisplayTopicActivity extends AppCompatActivity {
 
                 studentList = new ArrayList<String>();
 
+                studentObjectList = new ArrayList<Student>();
+
                 Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
 
                 while(iterator.hasNext()){
                     DataSnapshot s = iterator.next();
                     student = s.getValue(Student.class);
-                    studentList.add(student.getName());
+                    studentObjectList.add(student);
                 }
 
-                Collections.shuffle(studentList);
-                currentStudent = studentList.get(0);
+                Collections.shuffle(studentObjectList);
+
+                firstStudent = studentObjectList.get(0);
+
+                while(loopcounter < studentObjectList.size() )
+                {
+                   studentList.add(studentObjectList.get(loopcounter).getName());
+                   loopcounter++;
+                }
 
                 studentList.remove(0);
+                studentObjectList.remove(0);
 
             }
             @Override
@@ -202,9 +214,9 @@ public class DisplayTopicActivity extends AppCompatActivity {
             essayTopicsRef.child("id").setValue(""+activityCount);
             essayTopicsRef.child("essaycontent").setValue("");
             essayTopicsRef.child("status").setValue(Boolean.TRUE);
-            essayTopicsRef.child("currentstudent").setValue(currentStudent);
-            essayTopicsRef.child("nextstudents").setValue(studentList);
-            essayTopicsRef.child("time").setValue("30:00");
+            essayTopicsRef.child("currentstudent").setValue(firstStudent);
+            essayTopicsRef.child("nextstudents").setValue(studentObjectList);
+            essayTopicsRef.child("time").setValue("300000");
 
             Intent intent = new Intent(DisplayTopicActivity.this, MainActivity.class);
 

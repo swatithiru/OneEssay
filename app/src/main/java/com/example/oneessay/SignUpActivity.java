@@ -68,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
         if (result) {
 
-                if (pass.length() < 6) {
+                if (pass.length() > 5) {
 
                     if (password.getText().toString().equals(confirmpassword.getText().toString())) {
 
