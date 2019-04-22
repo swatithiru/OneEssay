@@ -35,7 +35,7 @@ public class ProfessorHomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_professor_home_page);
 
         studentListView = (ListView) findViewById(R.id.studentlist);
-
+        new Jolly(ProfessorHomePageActivity.this).execute(10);
         studentList = new ArrayList<String>();
 
         LoginActivity.mRootRef.child("student").addValueEventListener(new ValueEventListener() {

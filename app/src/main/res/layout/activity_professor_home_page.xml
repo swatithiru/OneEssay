@@ -5,129 +5,140 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfessorHomePageActivity">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:ignore="MissingConstraints"
-     >
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="395dp"
-        android:layout_height="715dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="380dp"
-            android:layout_height="110dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Welcome Professor! You can start selecting or adding students or selct the topic of the essay"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp">
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="123dp"
-            android:layout_height="31dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="116dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="395dp"
+            android:layout_height="715dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Student List:"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView6" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-        <Button
-            android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="316dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="studAdd"
-            android:text="ADD STUDENT"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.219"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activitytext" />
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="380dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Welcome Professor! You can start selecting or adding students or selct the topic of the essay"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="316dp"
-            android:layout_marginEnd="8dp"
-            android:text="ADD Topic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.714"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activitytext"
-            android:onClick="onClickTopic"/>
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="123dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="116dp"
+                android:layout_marginEnd="8dp"
+                android:text="Student List:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView6" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="8dp"
-            android:text="BACK"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="316dp"
+                android:layout_marginEnd="8dp"
+                android:onClick="studAdd"
+                android:text="ADD STUDENT"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.219"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activitytext" />
 
-        <ListView
-            android:layout_width="379dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:id="@+id/studentlist"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="316dp"
+                android:layout_marginEnd="8dp"
+                android:onClick="onClickTopic"
+                android:text="ADD Topic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.714"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activitytext" />
 
-        <TextView
-            android:id="@+id/activitytext"
-            android:layout_width="123dp"
-            android:layout_height="31dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="116dp"
-            android:layout_marginEnd="8dp"
-            android:text="Currently Active:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/studentlist" />
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="8dp"
+                android:text="BACK"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
 
-        <ListView
-            android:layout_width="379dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:id="@+id/activitylist"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activitytext" />
-    </android.support.constraint.ConstraintLayout>
-</ScrollView>
+            <ListView
+                android:id="@+id/studentlist"
+                android:layout_width="379dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/activitytext"
+                android:layout_width="123dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="116dp"
+                android:layout_marginEnd="8dp"
+                android:text="Currently Active:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/studentlist" />
+
+            <ListView
+                android:id="@+id/activitylist"
+                android:layout_width="379dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activitytext" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="82dp"
+                tools:layout_editor_absoluteY="596dp" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
