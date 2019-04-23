@@ -90,9 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(!LoginActivity.currentUser.getEmail().equals(activity.getCurrentstudent().getEmail()))
         {
             essaycontent.setEnabled(false);
-
-            Long asd = Long.parseLong(activity.getTime());
-
             LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
