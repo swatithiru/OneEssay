@@ -117,6 +117,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     time.setText(updateActivity.getTime());
                     essaycontent.setText(updateActivity.getEssaycontent());
 
+
+                    if(!LoginActivity.currentUser.getEmail().equals(updateActivity.getCurrentstudent().getEmail()))
+                    {
+                        Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }
+
                 }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -152,8 +159,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         essayActivityRef.child("currentstudent").setValue(activity.getNextstudents().get(0));
                         activity.getNextstudents().remove(0);
                         essayActivityRef.child("nextstudents").setValue(activity.getNextstudents());
+
                         progressDialog.setMessage(" in");
                         progressDialog.show();
+
                         Intent intent = new Intent(MainActivity.this,MainActivity.class);
                         startActivity(intent);
                         progressDialog.dismiss();
