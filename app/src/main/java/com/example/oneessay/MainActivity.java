@@ -1,5 +1,6 @@
 package com.example.oneessay;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     EssayActivity activity, updateActivity;
+    private ProgressDialog progressDialog;
 
     LinearLayout container;
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressDialog = new ProgressDialog(this);
 
         essaytopic = (TextView) findViewById(R.id.essaytopic);
         essaycontent = (EditText) findViewById(R.id.essaycontentText);
@@ -74,8 +78,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             essaycontent.setText(activity.getEssaycontent());
             currentstudent.setText(activity.getCurrentstudent().getName());
             time.setText(activity.getTime());
-            nextinline.setText("Next in Line: " + activity.getNextstudents().get(0).getName());
+           if(activity.getNextstudents().size()>0)
+           {
+               nextinline.setText("Next in Line: " + activity.getNextstudents().get(0).getName());
+           }
+           else
+           {
+               nextinline.setText("Next in Line: N/A ");
 
+           }
             noactiveessay.setVisibility(View.GONE);
             container.setVisibility(View.VISIBLE);
         }
@@ -132,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 public void onFinish() {
-
+                    essaycontent.setEnabled(false);
                     essayActivityRef = LoginActivity.mRootRef.child("activity")
                             .child(activity.getId());
                     essayActivityRef.child("essaycontent").setValue(essaycontent.getText().toString());
@@ -141,13 +152,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         essayActivityRef.child("currentstudent").setValue(activity.getNextstudents().get(0));
                         activity.getNextstudents().remove(0);
                         essayActivityRef.child("nextstudents").setValue(activity.getNextstudents());
+                        progressDialog.setMessage(" in");
+                        progressDialog.show();
+                        Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                        startActivity(intent);
+                        progressDialog.dismiss();
+
                     }
                     else
                     {
                         essayActivityRef.child("status").setValue(Boolean.FALSE);
+                        progressDialog.setMessage("Logging in");
+                        progressDialog.show();
+                        Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                        startActivity(intent);
+                        progressDialog.dismiss();
+
                     }
                 }
             }.start();
+        }
+
+    }
+    public void onClickSubmit(View view) {
+        essaycontent.setEnabled(false);
+        essayActivityRef = LoginActivity.mRootRef.child("activity")
+                .child(activity.getId());
+        essayActivityRef.child("essaycontent").setValue(essaycontent.getText().toString());
+        if(activity.getNextstudents().size()>0) {
+            essayActivityRef.child("currentstudent").setValue(activity.getNextstudents().get(0));
+            activity.getNextstudents().remove(0);
+            essayActivityRef.child("nextstudents").setValue(activity.getNextstudents());
+            Intent intent = new Intent(MainActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
+        else
+        {
+            essayActivityRef.child("status").setValue(Boolean.FALSE);
+            Intent intent = new Intent(MainActivity.this,MainActivity.class);
+            startActivity(intent);
+
         }
 
     }
