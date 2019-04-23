@@ -132,11 +132,12 @@ public class DisplayTopicActivity extends AppCompatActivity {
                     essayList.add(essay.getTopic());
                 }
 
-                count = essayList.size() + 100;
+                if(essayList.size() > 0) {
+                    count = essayList.size() + 100;
 
-                essayAdapter = new EssayTopicsAdapter(DisplayTopicActivity.this, essayList.toArray(new String[0]));
-                essayListView.setAdapter(essayAdapter);
-
+                    essayAdapter = new EssayTopicsAdapter(DisplayTopicActivity.this, essayList.toArray(new String[0]));
+                    essayListView.setAdapter(essayAdapter);
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -160,18 +161,14 @@ public class DisplayTopicActivity extends AppCompatActivity {
                     studentObjectList.add(student);
                 }
 
-                Collections.shuffle(studentObjectList);
+                if(studentObjectList.size() > 0) {
 
-                firstStudent = studentObjectList.get(0);
+                    Collections.shuffle(studentObjectList);
 
-                while(loopcounter < studentObjectList.size() )
-                {
-                   studentList.add(studentObjectList.get(loopcounter).getName());
-                   loopcounter++;
+                    firstStudent = studentObjectList.get(0);
+
+                    studentObjectList.remove(0);
                 }
-
-                studentList.remove(0);
-                studentObjectList.remove(0);
 
             }
             @Override
@@ -191,6 +188,7 @@ public class DisplayTopicActivity extends AppCompatActivity {
                     activity = s.getValue(EssayActivity.class);
                     i++;
                 }
+
                 activityCount = i+1000;
 
 
@@ -207,22 +205,26 @@ public class DisplayTopicActivity extends AppCompatActivity {
         Essay ess = new Essay("3001","Fall of Fountain Mountain");
 
         if(!EssayTopicsAdapter.selectedTopic.equals("None")) {
+            if(studentObjectList.size() > 0) {
 
-            essayTopicsRef = LoginActivity.mRootRef.child("activity").child(""+activityCount);
+                essayTopicsRef = LoginActivity.mRootRef.child("activity").child("" + activityCount);
 
-            essayTopicsRef.child("essaytopic").setValue(EssayTopicsAdapter.selectedTopic);
-            essayTopicsRef.child("id").setValue(""+activityCount);
-            essayTopicsRef.child("essaycontent").setValue("");
-            essayTopicsRef.child("status").setValue(Boolean.TRUE);
-            essayTopicsRef.child("currentstudent").setValue(firstStudent);
-            essayTopicsRef.child("nextstudents").setValue(studentObjectList);
-            essayTopicsRef.child("time").setValue("300000");
+                essayTopicsRef.child("essaytopic").setValue(EssayTopicsAdapter.selectedTopic);
+                essayTopicsRef.child("id").setValue("" + activityCount);
+                essayTopicsRef.child("essaycontent").setValue("");
+                essayTopicsRef.child("status").setValue(Boolean.TRUE);
+                essayTopicsRef.child("currentstudent").setValue(firstStudent);
+                essayTopicsRef.child("nextstudents").setValue(studentObjectList);
+                essayTopicsRef.child("time").setValue("300000");
 
-            Intent intent = new Intent(DisplayTopicActivity.this, MainActivity.class);
+                Intent intent = new Intent(DisplayTopicActivity.this, MainActivity.class);
 
-            intent.putExtra("essayselected", ess);
+                intent.putExtra("essayselected", ess);
 
-            startActivity(intent);
+                startActivity(intent);
+            }
+            else
+                Toast.makeText(DisplayTopicActivity.this, "You don't have sufficient students to start the activity", Toast.LENGTH_LONG).show();
         }
         else
             Toast.makeText(DisplayTopicActivity.this, "Please select a topic", Toast.LENGTH_LONG).show();

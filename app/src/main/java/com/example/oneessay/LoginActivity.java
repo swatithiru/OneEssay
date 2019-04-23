@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
 
-        activity = new EssayActivity();
+        activity = null;
 
         LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
             @Override

@@ -93,43 +93,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             Long asd = Long.parseLong(activity.getTime());
 
-            new CountDownTimer(asd, 1000) {
+            LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                public void onTick(long millisUntilFinished) {
-                    LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                    Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
 
-                            Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                    while(iterator.hasNext()){
+                        DataSnapshot s = iterator.next();
+                        updateActivity = s.getValue(EssayActivity.class);
+                        if(updateActivity.getStatus())
+                            break;
+                    }
 
-                            while(iterator.hasNext()){
-                                DataSnapshot s = iterator.next();
-                                updateActivity = s.getValue(EssayActivity.class);
-                                if(updateActivity.getStatus())
-                                    break;
-                            }
-
-                            time.setText(updateActivity.getTime());
-                            essaycontent.setText(updateActivity.getEssaycontent());
-
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-
-                public void onFinish() {
+                    time.setText(updateActivity.getTime());
+                    essaycontent.setText(updateActivity.getEssaycontent());
 
                 }
-            }.start();
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
         }
 
         else {
 
             essaycontent.setEnabled(true);
+
             new CountDownTimer(300000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
@@ -146,11 +138,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     essayActivityRef = LoginActivity.mRootRef.child("activity")
                             .child(activity.getId());
-                    essayActivityRef.child("currentstudent").setValue(activity.getNextstudents().get(0));
                     essayActivityRef.child("essaycontent").setValue(essaycontent.getText().toString());
-                    activity.getNextstudents().remove(0);
-                    essayActivityRef.child("nextstudents").setValue(activity.getNextstudents());
 
+                    if(activity.getNextstudents().size()>0) {
+                        essayActivityRef.child("currentstudent").setValue(activity.getNextstudents().get(0));
+                        activity.getNextstudents().remove(0);
+                        essayActivityRef.child("nextstudents").setValue(activity.getNextstudents());
+                    }
+                    else
+                    {
+                        essayActivityRef.child("status").setValue(Boolean.FALSE);
+                    }
                 }
             }.start();
         }

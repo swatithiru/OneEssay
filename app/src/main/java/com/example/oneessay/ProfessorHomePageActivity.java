@@ -54,7 +54,8 @@ public class ProfessorHomePageActivity extends AppCompatActivity {
 
                 ArrayAdapter adapter = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_list_item_1,studentList);
 
-                studentListView.setAdapter(adapter);
+                if(studentList.size() > 0)
+                    studentListView.setAdapter(adapter);
 
             }
             @Override
@@ -85,7 +86,8 @@ public class ProfessorHomePageActivity extends AppCompatActivity {
 
                 ArrayAdapter adapter = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_list_item_1,activityList);
 
-                activityListView.setAdapter(adapter);
+                if(activityList.size() > 0)
+                    activityListView.setAdapter(adapter);
 
             }
             @Override
