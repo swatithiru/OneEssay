@@ -48,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
 
         activity = null;
 
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+
         LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -74,6 +76,36 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickSignUp(View view) {
         Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        activity = null;
+
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+
+        LoginActivity.mRootRef.child("activity").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+
+                while(iterator.hasNext()){
+                    DataSnapshot s = iterator.next();
+                    activity = s.getValue(EssayActivity.class);
+                    if(activity.getStatus())
+                        break;
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void onClickLogin(View view) {
