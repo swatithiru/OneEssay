@@ -100,7 +100,8 @@ public class ProfileActivity extends AppCompatActivity {
                         if (student.getImage().equalsIgnoreCase("none")) {
                             // do nothing
                         } else {
-                            downloadCamera();
+                            //downloadCamera();
+                            new GetImage(ProfileActivity.this).execute(student.getImage());
                         }
                         name.setText(student.getName());
                         university.setText(student.getUniversity());
