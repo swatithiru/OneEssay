@@ -1,5 +1,6 @@
 package com.example.oneessay;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.CountDownTimer;
@@ -59,45 +60,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         noactiveessay = (TextView) findViewById(R.id.noactiveessay);
         container = (LinearLayout) findViewById(R.id.content_frame);
 
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        NavigationView navigationView=findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         actionBarDrawerToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         activity = LoginActivity.activity;
 
-        if(activity != null)
-        {
+        if (activity != null) {
             essaytopic.setText(activity.getEssaytopic());
             essaycontent.setText(activity.getEssaycontent());
             currentstudent.setText(activity.getCurrentstudent().getName());
             time.setText(activity.getTime());
-           if(activity.getNextstudents().size()>0)
-           {
-               nextinline.setText("Next in Line: " + activity.getNextstudents().get(0).getName());
-           }
-           else
-           {
-               nextinline.setText("Next in Line: N/A ");
+            if (activity.getNextstudents().size() > 0) {
+                nextinline.setText("Next in Line: " + activity.getNextstudents().get(0).getName());
+            } else {
+                nextinline.setText("Next in Line: N/A ");
 
-           }
+            }
             noactiveessay.setVisibility(View.GONE);
             container.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+            initMainActivity();
+        } else {
             noactiveessay.setVisibility(View.VISIBLE);
             container.setVisibility(View.GONE);
+
         }
+    }
 
-        System.out.println(LoginActivity.currentUser.getEmail()+" "+activity.getCurrentstudent().getEmail());
-
+    private void initMainActivity() {
         if(!LoginActivity.currentUser.getEmail().equals(activity.getCurrentstudent().getEmail()))
         {
             essaycontent.setEnabled(false);
@@ -118,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     essaycontent.setText(updateActivity.getEssaycontent());
 
 
-                    if(!LoginActivity.currentUser.getEmail().equals(updateActivity.getCurrentstudent().getEmail()))
+                    if(activity.getCurrentstudent().getEmail().equals(updateActivity.getCurrentstudent().getEmail()))
                     {
                         Intent intent = new Intent(MainActivity.this,MainActivity.class);
                         startActivity(intent);
@@ -183,6 +180,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
+
+    // System.out.println(LoginActivity.currentUser.getEmail()+" "+activity.getCurrentstudent().getEmail());
+
     public void onClickSubmit(View view) {
         essaycontent.setEnabled(false);
         essayActivityRef = LoginActivity.mRootRef.child("activity")

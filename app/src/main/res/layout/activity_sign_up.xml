@@ -6,11 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SignUpActivity">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SignUp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:text="SignUp" />
+
+    <ImageView
+        android:id="@+id/signUpImg"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClickImage"
+        android:scaleType="fitXY"
+        android:src="@drawable/walking" />
 
 
     <EditText
@@ -18,40 +28,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Name" />
+        android:hint="Name"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/StudentID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="StudentID" />
+        android:hint="StudentID"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/Email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Email" />
+        android:hint="Email"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/Password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Password" />
+        android:hint="Password"
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/ConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Confirm your Password" />
+        android:hint="Confirm your Password"
+        android:inputType="textPassword" />
+
+    <Spinner
+        android:id="@+id/University"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Spinner
         android:id="@+id/spinner"

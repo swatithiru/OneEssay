@@ -4,29 +4,38 @@ import java.io.Serializable;
 
 public class Student implements Serializable {
 
-    private  String name;
-    private  String email;
-    private  String password;
-    private  String studentid;
-    private  String professor;
+    private String name;
+    private String email;
+    private String password;
+    private String studentid;
+    private String professor;
 
-    public Student()
-    {
+
+    private String image;
+
+
+    private String university;
+
+    public Student() {
         name = "";
         email = "";
         password = "";
         studentid = "";
         professor = "";
+        university = "";
+        image = "";
 
 
     }
 
-    public Student(String name, String email, String password, String studentid, String professor) {
+    public Student(String name, String email, String password, String studentid, String professor, String university, String image) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.studentid = studentid;
         this.professor = professor;
+        this.university = university;
+        this.image = image;
 
     }
 
@@ -70,6 +79,23 @@ public class Student implements Serializable {
         this.professor = professor;
     }
 
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
     @Override
     public String toString() {
         return "Student{" +
@@ -78,6 +104,8 @@ public class Student implements Serializable {
                 ", password='" + password + '\'' +
                 ", studentid='" + studentid + '\'' +
                 ", professor='" + professor + '\'' +
+                ", university='" + university + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

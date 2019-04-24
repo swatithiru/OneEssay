@@ -18,4 +18,9 @@
         <item>Dr George Lyles</item>
         <item>Dr Austin Rose</item>
     </string-array>
+    <string-array name="University">
+        <item>University of Texas at Arlington</item>
+        <item>University of Texas at Dallas</item>
+        <item>University of Texas at Austin</item>
+        </string-array>
 </resources>
