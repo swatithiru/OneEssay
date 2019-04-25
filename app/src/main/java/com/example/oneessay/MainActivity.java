@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -74,19 +75,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activity = LoginActivity.activity;
 
         if (activity != null) {
-            essaytopic.setText(activity.getEssaytopic());
-            essaycontent.setText(activity.getEssaycontent());
-            currentstudent.setText(activity.getCurrentstudent().getName());
-            time.setText(activity.getTime());
-            if (activity.getNextstudents().size() > 0) {
-                nextinline.setText("Next in Line: " + activity.getNextstudents().get(0).getName());
-            } else {
-                nextinline.setText("Next in Line: N/A ");
+            if(!activity.getCurrentstudent().getName().equalsIgnoreCase("none")) {
+                essaytopic.setText(activity.getEssaytopic());
+                essaycontent.setText(activity.getEssaycontent());
+                currentstudent.setText(activity.getCurrentstudent().getName());
+                time.setText(activity.getTime());
+                if (activity.getNextstudents().size() > 0) {
+                    nextinline.setText("Next in Line: " + activity.getNextstudents().get(0).getName());
+                } else {
+                    nextinline.setText("Next in Line: N/A ");
 
+                }
+                noactiveessay.setVisibility(View.GONE);
+                container.setVisibility(View.VISIBLE);
+                initMainActivity();
             }
-            noactiveessay.setVisibility(View.GONE);
-            container.setVisibility(View.VISIBLE);
-            initMainActivity();
+            else
+            {
+                Button button =(Button)findViewById(R.id.submit);
+                button.setVisibility(View.GONE);
+            }
         } else {
             noactiveessay.setVisibility(View.VISIBLE);
             container.setVisibility(View.GONE);
