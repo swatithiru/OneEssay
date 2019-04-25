@@ -179,8 +179,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     else
                     {
                         essayActivityRef.child("status").setValue(Boolean.FALSE);
+                        essayActivityRef.child("currentstudent").setValue(new Student("None","None","None","None","None","None","None"));
 
                         essaycontent.setEnabled(Boolean.FALSE);
+
+                        Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                        startActivity(intent);
 
                     }
                 }
@@ -210,6 +214,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             essayActivityRef.child("status").setValue(Boolean.FALSE);
             essaycontent.setEnabled(Boolean.FALSE);
+            essayActivityRef.child("currentstudent").setValue(new Student("None","None","None","None","None","None","None"));
+
+            Intent intent = new Intent(MainActivity.this,MainActivity.class);
+            startActivity(intent);
         }
 
     }
