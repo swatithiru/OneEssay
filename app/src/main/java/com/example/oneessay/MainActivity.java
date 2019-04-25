@@ -96,8 +96,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     String nowCurrentStudentName;
 
-    int changecount = 0;
-
     private void initMainActivity() {
 
         nowCurrentStudentName = LoginActivity.currentUser.getEmail();
@@ -122,11 +120,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     essaycontent.setText(updateActivity.getEssaycontent());
 
 
-                    if(nowCurrentStudentName.equals(updateActivity.getCurrentstudent().getEmail()) && changecount == 0)
+                    if(nowCurrentStudentName.equals(updateActivity.getCurrentstudent().getEmail()) && LoginActivity.changecount == 0)
                     {
                         nowCurrentStudentName = updateActivity.getCurrentstudent().getName();
 
-                        changecount = 1;
+                        LoginActivity.changecount = 1;
 
                         Intent intent = new Intent(MainActivity.this,MainActivity.class);
                         startActivity(intent);

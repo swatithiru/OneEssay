@@ -78,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public static int changecount = 0;
+
     @Override
     protected void onResume() {
         super.onResume();
