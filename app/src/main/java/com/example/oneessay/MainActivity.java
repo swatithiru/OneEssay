@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -75,22 +74,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activity = LoginActivity.activity;
 
         if (activity != null) {
+            essaytopic.setText(activity.getEssaytopic());
+            essaycontent.setText(activity.getEssaycontent());
+            currentstudent.setText(activity.getCurrentstudent().getName());
+            time.setText(activity.getTime());
+            if (activity.getNextstudents().size() > 0) {
+                nextinline.setText("Next in Line: " + activity.getNextstudents().get(0).getName());
+            } else {
+                nextinline.setText("Next in Line: N/A ");
 
-                essaytopic.setText(activity.getEssaytopic());
-                essaycontent.setText(activity.getEssaycontent());
-                currentstudent.setText(activity.getCurrentstudent().getName());
-                time.setText(activity.getTime());
-                if (activity.getNextstudents().size() > 0) {
-                    nextinline.setText("Next in Line: " + activity.getNextstudents().get(0).getName());
-                } else {
-                    nextinline.setText("Next in Line: N/A ");
-
-                }
-                noactiveessay.setVisibility(View.GONE);
-                container.setVisibility(View.VISIBLE);
-                initMainActivity();
-
-                 } else {
+            }
+            noactiveessay.setVisibility(View.GONE);
+            container.setVisibility(View.VISIBLE);
+            initMainActivity();
+        } else {
             noactiveessay.setVisibility(View.VISIBLE);
             container.setVisibility(View.GONE);
 
@@ -182,12 +179,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     else
                     {
                         essayActivityRef.child("status").setValue(Boolean.FALSE);
-                       // essayActivityRef.child("currentstudent").setValue(new Student("None","None","None","None","None","None","None"));
+
+                        progressDialog.setMessage("Logging in");
+                        progressDialog.show();
 
                         essaycontent.setEnabled(Boolean.FALSE);
 
                         Intent intent = new Intent(MainActivity.this,MainActivity.class);
                         startActivity(intent);
+
+                        progressDialog.dismiss();
 
                     }
                 }
@@ -217,10 +218,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             essayActivityRef.child("status").setValue(Boolean.FALSE);
             essaycontent.setEnabled(Boolean.FALSE);
-            //essayActivityRef.child("currentstudent").setValue(new Student("None","None","None","None","None","None","None"));
-
             Intent intent = new Intent(MainActivity.this,MainActivity.class);
             startActivity(intent);
+
         }
 
     }
