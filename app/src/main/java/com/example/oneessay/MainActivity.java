@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     activity = updateActivity;
 
-
                     if(nowCurrentStudentName.equals(updateActivity.getCurrentstudent().getEmail()) && LoginActivity.changecount == 0)
                     {
                         nowCurrentStudentName = updateActivity.getCurrentstudent().getName();
@@ -180,17 +179,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     else
                     {
                         essayActivityRef.child("status").setValue(Boolean.FALSE);
-                        essayActivityRef.child("currentstudent").setValue("None");
-
-                        progressDialog.setMessage("Logging in");
-                        progressDialog.show();
 
                         essaycontent.setEnabled(Boolean.FALSE);
-
-                        Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                        startActivity(intent);
-
-                        progressDialog.dismiss();
 
                     }
                 }
@@ -219,11 +209,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else
         {
             essayActivityRef.child("status").setValue(Boolean.FALSE);
-            essayActivityRef.child("currentstudent").setValue("None");
             essaycontent.setEnabled(Boolean.FALSE);
-            Intent intent = new Intent(MainActivity.this,MainActivity.class);
-            startActivity(intent);
-
         }
 
     }
