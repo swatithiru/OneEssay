@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activity = LoginActivity.activity;
 
         if (activity != null) {
-            if(!activity.getCurrentstudent().getName().equalsIgnoreCase("none")) {
+
                 essaytopic.setText(activity.getEssaytopic());
                 essaycontent.setText(activity.getEssaycontent());
                 currentstudent.setText(activity.getCurrentstudent().getName());
@@ -89,13 +89,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 noactiveessay.setVisibility(View.GONE);
                 container.setVisibility(View.VISIBLE);
                 initMainActivity();
-            }
-            else
-            {
-                Button button =(Button)findViewById(R.id.submit);
-                button.setVisibility(View.GONE);
-            }
-        } else {
+
+                 } else {
             noactiveessay.setVisibility(View.VISIBLE);
             container.setVisibility(View.GONE);
 
@@ -187,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     else
                     {
                         essayActivityRef.child("status").setValue(Boolean.FALSE);
-                        essayActivityRef.child("currentstudent").setValue(new Student("None","None","None","None","None","None","None"));
+                       // essayActivityRef.child("currentstudent").setValue(new Student("None","None","None","None","None","None","None"));
 
                         essaycontent.setEnabled(Boolean.FALSE);
 
@@ -222,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             essayActivityRef.child("status").setValue(Boolean.FALSE);
             essaycontent.setEnabled(Boolean.FALSE);
-            essayActivityRef.child("currentstudent").setValue(new Student("None","None","None","None","None","None","None"));
+            //essayActivityRef.child("currentstudent").setValue(new Student("None","None","None","None","None","None","None"));
 
             Intent intent = new Intent(MainActivity.this,MainActivity.class);
             startActivity(intent);
