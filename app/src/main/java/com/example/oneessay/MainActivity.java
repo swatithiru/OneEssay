@@ -94,7 +94,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    String nowCurrentStudentName;
+
     private void initMainActivity() {
+
+        nowCurrentStudentName = activity.getCurrentstudent().getName();
+
         if(!LoginActivity.currentUser.getEmail().equals(activity.getCurrentstudent().getEmail()))
         {
             essaycontent.setEnabled(false);
@@ -115,10 +120,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     essaycontent.setText(updateActivity.getEssaycontent());
 
 
-                    if(activity.getCurrentstudent().getEmail().equals(updateActivity.getCurrentstudent().getEmail()))
+                    if(!nowCurrentStudentName.equals(updateActivity.getCurrentstudent().getName()))
                     {
+                        nowCurrentStudentName = updateActivity.getCurrentstudent().getName();
                         Intent intent = new Intent(MainActivity.this,MainActivity.class);
                         startActivity(intent);
+
                     }
 
                 }
