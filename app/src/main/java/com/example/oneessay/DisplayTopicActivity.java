@@ -168,6 +168,9 @@ public class DisplayTopicActivity extends AppCompatActivity {
                     firstStudent = studentObjectList.get(0);
 
                     studentObjectList.remove(0);
+
+                    Collections.sort(studentObjectList);
+
                 }
 
             }

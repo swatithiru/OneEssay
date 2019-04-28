@@ -98,7 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                     if(LoginActivity.currentUser != null) {
                         if (student.getImage().equalsIgnoreCase("none")) {
-                            // do nothing
+
                         } else {
                             //downloadCamera();
                             new GetImage(ProfileActivity.this).execute(student.getImage());
@@ -127,11 +127,12 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
+    File localFile;
 
     private void downloadCamera() {
-        storageReference = storage.getReferenceFromUrl("gs://oneessay-66407.appspot.com/").child(student.getImage());
+        storageReference = storage.getReferenceFromUrl("gs://oneessay-66407.appspot.com").child(student.getImage());
         try {
-            final File localFile = File.createTempFile("images", "png");
+            localFile = File.createTempFile("images", "png");
             storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {

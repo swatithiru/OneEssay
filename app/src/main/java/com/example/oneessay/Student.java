@@ -2,7 +2,7 @@ package com.example.oneessay;
 
 import java.io.Serializable;
 
-public class Student implements Serializable {
+public class Student implements Serializable, Comparable<Student> {
 
     private String name;
     private String email;
@@ -107,5 +107,10 @@ public class Student implements Serializable {
                 ", university='" + university + '\'' +
                 ", image='" + image + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Student student) {
+        return this.name.compareTo(student.name);
     }
 }

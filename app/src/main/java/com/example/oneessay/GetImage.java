@@ -20,25 +20,38 @@ import java.io.IOException;
 public class GetImage extends AsyncTask<String,Void, Bitmap> {
     Activity activity = new Activity();
     ImageView imageView;
+
     StorageReference storageReference;
     public GetImage(Activity activity)
     {
         this.activity=activity;
     }
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+
+    FirebaseStorage storage;
+
     Bitmap bitmap;
+    File localFile;
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        imageView = (ImageView) activity.findViewById(R.id.profileimage);
+        storage = FirebaseStorage.getInstance();
+    }
+
     @Override
     protected Bitmap doInBackground(String... strings) {
 
-        storageReference = storage.getReferenceFromUrl("gs://oneessaygit.appspot.com/").child(strings[0]);
+        storageReference = storage.getReferenceFromUrl("gs://oneessay-66407.appspot.com").child(strings[0]);
+
         try {
-            final File localFile = File.createTempFile("images", "png");
+            localFile = File.createTempFile("images", "png");
             storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
 
-                    //imageView.setImageBitmap(bitmap);
+                    imageView.setImageBitmap(bitmap);
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -46,16 +59,11 @@ public class GetImage extends AsyncTask<String,Void, Bitmap> {
                 public void onFailure(@NonNull Exception exception) {
                 }
             });
+            return bitmap;
         } catch (IOException e) {
         }
 
         return bitmap;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        imageView = (ImageView) activity.findViewById(R.id.profileimage);
     }
 
     @Override
