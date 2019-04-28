@@ -43,7 +43,7 @@ public class DisplayTopicActivity extends AppCompatActivity {
 
     Essay essay;
 
-    List<String> essayList;
+    ArrayList<Essay> essayList;
     EssayTopicsAdapter essayAdapter;
 
     ArrayList<Student> studentObjectList;
@@ -60,7 +60,7 @@ public class DisplayTopicActivity extends AppCompatActivity {
 
         essayListView = (ListView) findViewById(R.id.essaytopicsListView);
 
-        essayList = new ArrayList<String>();
+        essayList = new ArrayList<Essay>();
 
         updateList();
 
@@ -129,13 +129,13 @@ public class DisplayTopicActivity extends AppCompatActivity {
                 while(iterator.hasNext()){
                     DataSnapshot s = iterator.next();
                     essay = s.getValue(Essay.class);
-                    essayList.add(essay.getTopic());
+                    essayList.add(essay);
                 }
 
                 if(essayList.size() > 0) {
                     count = essayList.size() + 100;
 
-                    essayAdapter = new EssayTopicsAdapter(DisplayTopicActivity.this, essayList.toArray(new String[0]));
+                    essayAdapter = new EssayTopicsAdapter(DisplayTopicActivity.this, essayList);
                     essayListView.setAdapter(essayAdapter);
                 }
             }
