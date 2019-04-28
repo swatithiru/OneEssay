@@ -48,6 +48,8 @@ public class EssayTopicsAdapter extends ArrayAdapter<Essay> {
 
         essayText.setText(values.get(position).getTopic());
 
+        //hello
+
         essayText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
