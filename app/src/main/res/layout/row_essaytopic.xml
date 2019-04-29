@@ -17,18 +17,4 @@
         android:id="@+id/essayrow_topic"
         android:hint="EssayName"/>
 
-    <ImageView
-        android:id="@+id/minus"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/essayrow_topic"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:scaleType="fitEnd"
-        app:srcCompat="@android:drawable/btn_minus" />
-
-
 </RelativeLayout>
